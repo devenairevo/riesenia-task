@@ -36,11 +36,12 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 <body>
     <nav class="top-nav">
         <div class="top-nav-title">
-            <a href="<?= $this->Url->build('/') ?>"><span>Cake</span>PHP</a>
+            <a href="<?= $this->Url->build('/') ?>"><span>Mini</span>Store</a>
         </div>
         <div class="top-nav-links">
-            <a target="_blank" rel="noopener" href="https://book.cakephp.org/5/">Documentation</a>
-            <a target="_blank" rel="noopener" href="https://api.cakephp.org/">API</a>
+            <?php if ($this->Identity->isLoggedIn()): ?>
+                <?= $this->Html->link('Sign out', ['controller' => 'Users', 'action' => 'logout'], ['target' => '_self']) ?>
+            <?php endif; ?>
         </div>
     </nav>
     <main class="main">

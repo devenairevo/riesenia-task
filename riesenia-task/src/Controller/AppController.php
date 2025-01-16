@@ -27,7 +27,9 @@ class AppController extends Controller
         parent::initialize();
 
         $this->loadComponent('Flash');
-        $this->loadComponent('Authentication.Authentication');
+        $this->loadComponent('Authentication.Authentication', [
+            'logoutRedirect' => '/users/login'
+        ]);
 
         /*
          * Enable the following component for recommended CakePHP form protection settings.
