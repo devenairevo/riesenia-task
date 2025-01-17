@@ -19,7 +19,7 @@ services:
         - ../riesenia-task:/var/www/myapp
         - ./mysql/my.cnf:/etc/mysql/my.cnf
     ports:
-      - "8106:3306"
+      - "3306:3306"
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_DATABASE=${MYSQL_DATABASE}
