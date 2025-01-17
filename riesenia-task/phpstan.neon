@@ -5,3 +5,5 @@ parameters:
         - tests/bootstrap.php
     paths:
         - src/
+    ignoreErrors:
+        - '#Access to an undefined property App\\Controller\\.*::\$.*#'

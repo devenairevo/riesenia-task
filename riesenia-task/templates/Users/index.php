@@ -23,7 +23,11 @@ use App\Model\Entity\User;
             </td>
             <td>
                 <?= $this->Html->link('Edit', ['action' => 'edit', $user->id]) ?> |
-                <?= $this->Html->link('Delete', ['action' => 'delete', $user->id], ['confirm' => 'Are you sure you want to delete this user?']) ?>
+                <?= $this->Html->link(
+                    'Delete',
+                    ['action' => 'delete', $user->id],
+                    ['confirm' => 'Are you sure you want to delete this user?']
+                ) ?>
             </td>
         </tr>
     <?php endforeach; ?>
