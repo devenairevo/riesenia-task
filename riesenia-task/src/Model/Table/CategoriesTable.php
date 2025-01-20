@@ -13,6 +13,14 @@ class CategoriesTable extends Table
         parent::initialize($config);
         $this->setTable('categories');
         $this->addBehavior('Timestamp');
+
+        $this->belongsToMany('Products', [
+            'joinTable' => 'products_categories',
+        ])
+            ->setThrough('ProductsCategories')
+            ->setForeignKey('category_id')
+            ->setTargetForeignKey('product_id')
+            ->setThrough('ProductsCategories');
     }
 
     public function validationDefault(Validator $validator): Validator

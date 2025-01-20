@@ -5,18 +5,9 @@ namespace App\Controller;
 use App\Controller\Helpers\DataFormat;
 use Cake\Event\EventInterface;
 use Cake\Http\Response;
-use Cake\ORM\TableRegistry;
 
 class UsersController extends AppController
 {
-    private mixed $Users;
-
-    public function initialize(): void
-    {
-        parent::initialize();
-        $this->Users = TableRegistry::getTableLocator()->get('Users');
-    }
-
     public function index(): void
     {
         $users = $this->paginate($this->Users);

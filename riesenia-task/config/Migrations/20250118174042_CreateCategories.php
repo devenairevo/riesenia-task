@@ -24,13 +24,6 @@ class CreateCategories extends BaseMigration
             'default' => null,
             'null' => false,
         ]);
-        $table->addIndex([
-            'name',
-        
-            ], [
-            'name' => 'UNIQUE_NAME',
-            'unique' => true,
-        ]);
         $table->create();
     }
 }
