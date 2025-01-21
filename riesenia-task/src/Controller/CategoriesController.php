@@ -60,6 +60,12 @@ class CategoriesController extends AppController
         return null;
     }
 
+    public function view(int $id): void
+    {
+        $categories = $this->Categories->get($id, contain: ['Products', 'Products.ProductImages']);
+        $this->set(\compact('categories'));
+    }
+
     public function delete(int $id): ?Response
     {
         $category = $this->Categories->get($id);

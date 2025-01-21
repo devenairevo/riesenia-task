@@ -16,7 +16,7 @@ use App\Model\Entity\Category;
     <?php foreach ($categories as $category): ?>
         <tr>
             <td>
-                <?= $category->name ?>
+                <?= $this->Html->link("$category->name", ['action' => 'view', $category->id]) ?>
             </td>
             <td>
                 <?= $category->created->format(DATE_RFC850) ?>

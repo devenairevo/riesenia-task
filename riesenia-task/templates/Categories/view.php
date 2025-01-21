@@ -1,12 +1,12 @@
 <?php
 /**
- * @var Product $products
+ * @var Category $categories
  */
 
-use App\Model\Entity\Product;
+use App\Model\Entity\Category;
 
 ?>
-<h1>Products</h1>
+<h1>Category - <?= $categories->name ?></h1>
 <table>
     <tr>
         <th>Product</th>
@@ -14,14 +14,12 @@ use App\Model\Entity\Product;
         <th>Price</th>
         <th>VAT(%)</th>
         <th>Image</th>
-        <th>Categories</th>
-        <th>Created</th>
         <th>Action</th>
     </tr>
-    <?php foreach ($products as $product): ?>
+    <?php foreach ($categories->products as $product): ?>
         <tr>
             <td>
-                <?= $product->name ?>
+                <?= $this->Html->link($product->name, ['controller' => 'Products', 'action' => 'edit', $product->id]) ?>
             </td>
             <td>
                 <?= $product->description ?>
@@ -43,22 +41,8 @@ use App\Model\Entity\Product;
                 <?php endif; ?>
             </td>
             <td>
-                <?php foreach ($product->categories as $category): ?>
-                    <li><?= $category->name ?></li>
-                <?php endforeach; ?>
-            </td>
-            <td>
-                <?= $product->created->format(DATE_RFC850) ?>
-            </td>
-            <td>
                 <?= $this->Html->link('Edit', ['action' => 'edit', $product->id]) ?>
-                <?= $this->Html->link(
-                    'Delete',
-                    ['action' => 'delete', $product->id],
-                    ['confirm' => 'Are you sure you want to delete this category?']
-                ) ?>
             </td>
         </tr>
     <?php endforeach; ?>
-    <?= $this->Html->link(__('Add Product'), ['action' => 'add'], ['class' => 'button']); ?>
 </table>

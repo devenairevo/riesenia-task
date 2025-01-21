@@ -49,7 +49,7 @@ class PagesController extends AppController
     public function display(string ...$path): ?Response
     {
         if (!$path) {
-            return $this->redirect('/');
+            return $this->redirect('products/');
         }
 
         if (\in_array('..', $path, true) || \in_array('.', $path, true)) {
