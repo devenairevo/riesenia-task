@@ -30,5 +30,25 @@ class AppController extends Controller
         $this->loadComponent('Authentication.Authentication', [
             'logoutRedirect' => '/users/login'
         ]);
+        $this->setCartSummary();
+    }
+
+    private function setCartSummary(): void
+    {
+        $session = $this->request->getSession();
+        $currentUser = $this->Authentication->getIdentity();
+
+        $summary = [
+            'Total Including Vat' => 0,
+            'Total Excluding Vat' => 0,
+            'Vat Rates' => [],
+        ];
+
+        if ($currentUser) {
+            $cartKey = 'Cart_' . $currentUser['id'] . '_Summary';
+            $summary = $session->read($cartKey) ?? $summary;
+        }
+
+        $this->set('cartSummary', $summary);
     }
 }

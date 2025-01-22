@@ -6,7 +6,11 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * @property mixed $product_images
+ * @property mixed  $product_images
+ * @property int    $id
+ * @property string $name
+ * @property float  $price
+ * @property float  $vat_rate
  */
 class Product extends Entity
 {

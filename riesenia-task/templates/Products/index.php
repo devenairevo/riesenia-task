@@ -48,15 +48,16 @@ use App\Model\Entity\Product;
                 <?php endforeach; ?>
             </td>
             <td>
-                <?= $product->created->format(DATE_RFC850) ?>
+                <?= $product->created->format('d M Y') ?>
             </td>
             <td>
-                <?= $this->Html->link('Edit', ['action' => 'edit', $product->id]) ?>
+                <?= $this->Html->link('Edit', ['action' => 'edit', $product->id]) ?> |
                 <?= $this->Html->link(
                     'Delete',
                     ['action' => 'delete', $product->id],
                     ['confirm' => 'Are you sure you want to delete this category?']
-                ) ?>
+                ) ?> |
+                <?= $this->Html->link('Add to Cart', ['controller' => 'Cart', 'action' => 'addToCart', $product->id, $this->Identity->get('id')]) ?>
             </td>
         </tr>
     <?php endforeach; ?>

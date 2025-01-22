@@ -19,7 +19,7 @@ use App\Model\Entity\Category;
                 <?= $this->Html->link("$category->name", ['action' => 'view', $category->id]) ?>
             </td>
             <td>
-                <?= $category->created->format(DATE_RFC850) ?>
+                <?= $category->created->format('d M Y') ?>
             </td>
             <td>
                 <?= $this->Html->link('Edit', ['action' => 'edit', $category->id]) ?> |
