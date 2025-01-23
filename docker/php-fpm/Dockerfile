@@ -1,11 +1,12 @@
-FROM phpdockerio/php:8.4-fpm
+FROM phpdockerio/php:8.3-fpm
 WORKDIR "/var/www/myapp"
 
 # Install selected extensions and other stuff
 RUN apt-get update \
     && apt-get -y --no-install-recommends install \
-        php8.4-intl \
-        php8.4-mysql \
-        php8.4-sqlite3 \
+        php8.3-intl \
+        php8.3-mysql \
+        php8.3-sqlite3 \
+        php8.3-bcmath \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*

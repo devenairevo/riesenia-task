@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Model\Entity\Product;
 use Cake\Http\Exception\UnauthorizedException;
 use Cake\View\JsonView;
+use Riesenia\Cart\Cart;
+use Riesenia\Cart\CartItemInterface;
 
 class CartController extends AppController
 {
@@ -23,21 +25,27 @@ class CartController extends AppController
             throw new UnauthorizedException('You must be logged in');
         }
 
+        /* @var Product $product */
         $this->Products = $this->fetchTable('Products');
 
-        /** @var Product $product */
         $product = $this->Products->get($productId);
 
         $session = $this->request->getSession();
         $cartKey = 'Cart_' . $currentUserId;
-        $cart = $session->read($cartKey) ?? [];
 
-        $cart[] = [
-            'name' => $product->name,
-            'price' => $product->price,
-            'vat_rate' => $product->vat_rate,
-        ];
-        $session->write($cartKey, $cart);
+        $serializedCart = $session->read($cartKey);
+
+        $cart = $serializedCart ? \unserialize($serializedCart) : new Cart();
+
+        if (!$serializedCart) {
+            $cart->setContext(['customer_id' => $currentUserId]);
+            $cart->setPricesWithVat(true);
+            $cart->setRoundingDecimals(2);
+        }
+
+        $cart->addItem($product, 1);
+
+        $session->write($cartKey, \serialize($cart));
 
         $summary = $this->calculateCartSummary($cart);
 
@@ -49,26 +57,25 @@ class CartController extends AppController
     }
 
     /**
-     * @param array<int, array{name: string, price: float, vat_rate: float}> $cart
-     *
      * @return array<string, mixed>
+     *
+     * @property CartItemInterface $vat_rate
      */
-    private function calculateCartSummary(array $cart): array
+    private function calculateCartSummary(Cart $cart): array
     {
-        $totalIncludingVat = 0;
-        $totalExcludingVat = 0;
+        $items = $cart->getItems();
+        $totalIncludingVat = $cart->getTotal();
+        $totalExcludingVat = $cart->getSubtotal();
         $vatRates = [];
 
-        foreach ($cart as $item) {
-            $totalIncludingVat += $item['price'] + ($item['price'] * $item['vat_rate'] / 100);
-            $totalExcludingVat += $item['price'];
-            $vatRates[] = $item['vat_rate'];
+        foreach ($items as $item) {
+            $vatRates[] = $item->getTaxRate();
         }
 
         return [
-            'Total Including Vat' => \round($totalIncludingVat, 2),
-            'Total Excluding Vat' => \round($totalExcludingVat, 2),
-            'Vat Rates' => \array_unique($vatRates)
+            'Total Including Vat' => $totalIncludingVat->innerValue(),
+            'Total Excluding Vat' => $totalExcludingVat->innerValue(),
+            'Vat Rates' => $vatRates
         ];
     }
 }
