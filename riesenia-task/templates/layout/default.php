@@ -1,20 +1,11 @@
 <?php
 /**
- * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
- *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
- * @link          https://cakephp.org CakePHP(tm) Project
- * @since         0.10.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
- * @var \App\View\AppView $this
+ * @var AppView $this
  */
 
-$cakeDescription = 'CakePHP: the rapid development php framework';
+use App\View\AppView;
+
+$description = 'MINI STORE';
 ?>
 <!DOCTYPE html>
 <html>
@@ -22,7 +13,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>
-        <?= $cakeDescription ?>:
+        <?= $description ?>:
         <?= $this->fetch('title') ?>
     </title>
     <?= $this->Html->meta('icon') ?>
@@ -32,6 +23,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
+    <script src="https://kit.fontawesome.com/4ddfe8dc82.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <nav class="top-nav">
@@ -40,7 +32,10 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
         </div>
         <div class="top-nav-links">
             <?php if ($this->Identity->isLoggedIn()): ?>
-                <?= $this->Html->link('Sign out', ['controller' => 'Users', 'action' => 'logout'], ['target' => '_self']) ?>
+                <?= $this->Html->link('Categories', ['controller' => 'Categories', 'action' => 'index'], ['target' => '_self']) ?>|
+                <?= $this->Html->link('Products', ['controller' => 'Products', 'action' => 'index'], ['target' => '_self']) ?>|
+                <?= $this->Html->link('Users', ['controller' => 'Users', 'action' => 'index'], ['target' => '_self']) ?>|
+                <?= $this->Html->link('Log Out', ['controller' => 'Users', 'action' => 'logout'], ['target' => '_self']) ?> | <i class="fa-solid fa-user"></i>  <strong><?= $this->Identity->get('username') ?></strong>
             <?php endif; ?>
         </div>
     </nav>

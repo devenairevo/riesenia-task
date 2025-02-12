@@ -31,4 +31,5 @@ use App\Model\Entity\User;
             </td>
         </tr>
     <?php endforeach; ?>
+    <?= $this->Html->link(__('Add User'), ['action' => 'add'], ['class' => 'button']); ?>
 </table>

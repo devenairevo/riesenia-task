@@ -22,18 +22,43 @@ class UsersSeed extends BaseSeed
     {
         $data = [
             [
-                'username' => 'admin',
-                'password' => password_hash('demo', PASSWORD_DEFAULT),
+                'username' => 'elondusk',
+                'password' => 'ElonMuskSon1',
+                'created' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'username' => 'oleq',
+                'password' => 'HelloWorld1',
+                'created' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'username' => 'johnproduction',
+                'password' => 'john1RRR',
                 'created' => date('Y-m-d H:i:s'),
             ],
             [
                 'username' => 'eldar',
-                'password' => password_hash('eldar', PASSWORD_DEFAULT),
+                'password' => 'qwertyu1RR',
                 'created' => date('Y-m-d H:i:s'),
             ]
         ];
 
         $table = $this->table('users');
-        $table->insert($data)->save();
+        $validUsers = [];
+
+        foreach ($data as $user) {
+            if (preg_match('/^(?=.*[A-Z])(?=.*\d)/', $user['password'])) {
+                $user['password'] = password_hash($user['password'], PASSWORD_DEFAULT);
+                $validUsers[] = $user;
+            } else {
+                echo "User {$user['username']} password skipped.\n";
+            }
+        }
+
+        if (!empty($validUsers)) {
+            $table->insert($validUsers)->save();
+        } else {
+            echo "No valid users to insert.\n";
+        }
     }
 }
