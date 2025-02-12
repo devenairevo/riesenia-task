@@ -43,8 +43,8 @@ return [
              */
             //'port' => 'non_standard_port_number',
 
-            'port' => '8106',
-            'host' => 'localhost',
+            'port' => '3306',
+            'host' => '127.0.0.1',
             'username' => 'root',
             'password' => '1801',
             'database' => 'riesenia_db',

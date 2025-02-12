@@ -316,8 +316,8 @@ return [
              * which is the recommended value in production environments
              */
             //'init' => ['SET GLOBAL innodb_stats_on_metadata = 0'],
-            'port' => '8106',
-            'host' => 'localhost',
+            'port' => '3306',
+            'host' => '127.0.0.1',
             'username' => 'root',
             'password' => '1801',
             'database' => 'riesenia_db',
