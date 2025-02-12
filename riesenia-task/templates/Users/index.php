@@ -19,7 +19,7 @@ use App\Model\Entity\User;
                 <?= $user->username ?>
             </td>
             <td>
-                <?= $user->created->format(DATE_RFC850) ?>
+                <?= $user->created->format('d M Y') ?>
             </td>
             <td>
                 <?= $this->Html->link('Edit', ['action' => 'edit', $user->id]) ?> |

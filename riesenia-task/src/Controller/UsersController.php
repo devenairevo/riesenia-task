@@ -122,7 +122,7 @@ class UsersController extends AppController
             $result = $this->Authentication->getResult();
 
             if ($result->isValid()) {
-                $target = $this->Authentication->getLoginRedirect() ?? '/users';
+                $target = $this->Authentication->getLoginRedirect() ?? '/';
 
                 return $this->redirect($target);
             }
@@ -132,8 +132,17 @@ class UsersController extends AppController
         return null;
     }
 
-    public function logout(): ?Response
+    public function logout(string $userId): ?Response
     {
+        $session = $this->request->getSession();
+        $currentUser = $this->Users->get($userId);
+
+        if ($currentUser) {
+            $cartKey = 'Cart_' . $currentUser['id'];
+            $session->delete($cartKey);
+            $session->delete($cartKey . '_Summary');
+        }
+
         $this->Authentication->logout();
 
         return $this->redirect(['controller' => 'Users', 'action' => 'login']);
